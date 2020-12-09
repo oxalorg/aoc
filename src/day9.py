@@ -7,22 +7,17 @@ from itertools import combinations
 
 def find_sum(coll, val):
   sum_pairs = [sum(comb) for comb in combinations(coll, 2)]
-  if val in sum_pairs:
-    return True
-  return False
+  return val in sum_pairs
 
-def part1():
-  for i, x in enumerate(data[25:]):
-    if not find_sum(data[i:i + 25], x):
+def part1(coll, preamble_size):
+  for i, x in enumerate(coll[preamble_size:]):
+    if not find_sum(coll[i:i+preamble_size], x):
       return x
 
-ans = part1()
-print(ans)
-
-def part2(invalid):
-  for i, x in enumerate(data):
+def part2(coll, invalid):
+  for i, x in enumerate(coll):
     window = [x]
-    for j, y in enumerate(data[i + 1:]):
+    for j, y in enumerate(coll[i + 1:]):
       window.append(y)
       window_sum = sum(window)
       if window_sum == invalid:
@@ -32,4 +27,6 @@ def part2(invalid):
       else:
         break
 
-print(part2(ans))
+ans = part1(data, 25)
+print(ans)
+print(part2(data, ans))
