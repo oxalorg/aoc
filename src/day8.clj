@@ -13,12 +13,11 @@
     #(hash-map :op (first %) :val (Integer/parseInt (second %)))
     #(str/split % #" ")) input))
 
-commands
-
 (defn find-loop [commands]
   (loop [commands commands
          n 0
-         register 0]
+         register 0
+         visited? #{}]
     (let [command (nth commands n)]
       (cond
         (nil? command) register

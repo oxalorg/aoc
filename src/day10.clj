@@ -14,8 +14,8 @@
     (* (count (filter #(= 1 %) diff-list))
        (count (filter #(= 3 %) diff-list)))))
 
-(def coll (vec (sort (conj input 0 (+ (apply max input) 3)))))
-
+;; (def coll (vec (sort (conj input 0 (+ (apply max input) 3)))))
+(def coll [0 2 4 6 7 10])
 (defn sol-exists? [i step]
   (let [len (count coll)
         j (+ i step)]
@@ -47,3 +47,41 @@
 
 (part2 0)
 ;; => 13816758796288
+
+(defn ! [n]
+  (reduce *' (range 1 (inc n))))
+(defn combinations [n r]
+  (if (= 1 n)
+    0
+    (let [n! (! n)
+          r! (! r)
+          r-n! (! (- n r))]
+      (/ n! (* r! r-n!)))))
+
+(def tinput-1 [16
+10
+15
+5
+1
+11
+7
+19
+21
+6
+12
+4])
+
+0 4 6 7
+
+
+(->> [4 6 7]
+     (sort)
+     (cons 0)
+     (#(concat % [(+ 3 (last %))]))
+     (partition 2 1)
+     (map #(- (second %) (first %)))
+     (partition-by identity)
+     (keep #(seq (filter #{1} %)))
+     (map count)
+     (map #(inc (combinations % 2)))
+     (apply *))
